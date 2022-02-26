@@ -1,0 +1,335 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Challenger-02 documentation",
+    "description": "This is documentation about ignite Challenge-02",
+    "version": "1.0.0",
+    "contact": {
+      "email":"andradearthurf@gmail.com"
+    }
+  },
+  "tags": [
+    {
+      "name": "users",
+      "description": "User management."
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Create a new user",
+         "description": "Create a new user",
+         "requestBody": {
+           "content": {
+             "application/json": {
+               "schema": {
+                 "type": "object",
+                 "properties": {
+                   "name": {
+                     "type": "string"
+                   },
+                   "email": {
+                     "type": "string"
+                   }
+                 },
+                 "example": {
+                   "name": "RocketSeat",
+                   "email": "rocketseatexample@gmail.com"
+                 }
+               }
+             }
+           }
+         },
+         "responses": {
+           "201": {
+             "description": "Created user!",
+             "content": {
+               "application/json": {
+                 "schema": {
+                   "type": "object",
+                   "properties": {
+                     "admin": {
+                       "type": "boolean"
+                     },
+                     "id": {
+                       "type": "string"
+                     },
+                     "name": {
+                       "type": "string"
+                     },
+                     "email": {
+                       "type":"string"
+                     },
+                     "created_at": {
+                       "type": "string"
+                     },
+                     "updated_at": {
+                       "type": "string"
+                     }
+                   },
+                   "example":{
+                     "id": "2f5e6c96-95a5-41db-bda5-6b1bcba50807",
+                     "admin": false,
+                     "name": "RocketSeat",
+                     "email": "rocketseatexample@gmail.com",
+                     "created_at": "2021-02-28:32:40.759Z",
+                     "updated_at": "2021-03-21T20:32:40.759Z"
+                   }
+                 }
+               }
+             }
+           },
+           "400": {
+             "description": "Email already exists!",
+             "content": {
+               "application/json": {
+                 "schema": {
+                   "type": "object",
+                   "properties": {
+                     "error": "string"
+                   },
+                   "example": {
+                     "error": "User already exists!"
+                   }
+                 }
+               }
+             }
+           }
+         }
+      },
+      "get": {
+        "tags": ["users"],
+        "summary": "List all users",
+         "description": "List all users",
+         "parameters": [
+           {
+           "in": "header",
+           "name": "user_id",
+           "required": true,
+           "schema": {
+             "type": "string",
+             "format": "uuid"
+           }
+         }
+        ],
+        "responses": {
+          "200":{
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "updated_at": {
+                        "type": "string"
+                      }
+                    },
+                    "example": [
+                      {
+                        "id": "2f5e6c96-95a5-41db-bda5-6b1bcba50807",
+                        "admin": true,
+                        "name": "RocketSeat",
+                        "email": "rocketseatexample@gmail.com",
+                        "created_at": "2021-02-28:32:40.759Z",
+                        "updated_at": "2021-03-21T20:32:40.759Z"
+                      },
+                      {
+                        "id": "d32e9e4e-43cd-4f64-a393-4f0158c9e348",
+                        "admin": false,
+                        "name": "Arthur",
+                        "email": "arthurexample@gmail.com.",
+                        "created_at": "2021-02-28:32:40.759Z",
+                        "updated_at": "2021-03-21T20:32:40.759Z"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User is not admin or not found",
+            "content":{
+              "application/json": {
+                "schema": {
+                  "type":"object",
+                  "properties": {
+                    "error": "string"
+                  },
+                  "example": {
+                    "error": "Only admin can list users"
+                  }
+                }
+              }
+            } 
+          } 
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["users"],
+        "summary": "List a user by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "description": "User id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  },
+                  "example":{
+                    "id": "2f5e6c96-95a5-41db-bda5-6b1bcba50807",
+                    "admin": false,
+                    "name": "RocketSeat",
+                    "email": "rocketseatexample@gmail.com",
+                    "created_at": "2021-02-28:32:40.759Z",
+                    "updated_at": "2021-03-21T20:32:40.759Z"
+                  } 
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": "string"
+                  },
+                  "example": {
+                    "error": "User not found"
+                  }
+                }
+              }
+            }
+          }
+        } 
+      }
+    },
+    "/users/{user_id}/admin": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Turn user admin",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "description": "User id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  },
+                  "example":{
+                    "id": "2f5e6c96-95a5-41db-bda5-6b1bcba50807",
+                    "admin": true,
+                    "name": "RocketSeat",
+                    "email": "rocketseatexample@gmail.com",
+                    "created_at": "2021-02-28:32:40.759Z",
+                    "updated_at": "2021-03-21T20:32:40.759Z"
+                  } 
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": "string"
+                  },
+                  "example": {
+                    "error": "User not found"
+                  }
+                }
+              }
+            }
+          }
+        } 
+      }
+    }
+  }
+}
